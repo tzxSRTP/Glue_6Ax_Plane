@@ -14,4 +14,52 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="planner.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="image_process_function.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="arm_control_function.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="control.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="all_header.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="arm_control_function.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="image_process_function.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\相关资料\socket与UR通讯_from男哥.py">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\相关资料\UR机械臂使用手册.pdf">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\相关资料\UR机械臂与PC通讯程序（socket）_互联网资料仅参考.docx">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\相关资料\大象机械臂仿真.ttt">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="..\相关资料\大象机械臂控制函数库.py">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
 </Project>

@@ -123,6 +123,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="control.cpp" />
+    <ClCompile Include="arm_control_function.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="image_process_function.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="planner.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="all_header.h" />
+    <ClInclude Include="arm_control_function.h" />
+    <ClInclude Include="image_process_function.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\相关资料\socket与UR通讯_from男哥.py" />
+    <None Include="..\相关资料\UR机械臂与PC通讯程序（socket）_互联网资料仅参考.docx" />
+    <None Include="..\相关资料\UR机械臂使用手册.pdf" />
+    <None Include="..\相关资料\大象机械臂仿真.ttt" />
+    <None Include="..\相关资料\大象机械臂控制函数库.py" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
