@@ -1,8 +1,8 @@
 /**************************************************************
 * @file     planner.cpp
-* @brief    ¹ì¼£¹æ»®Ä£¿é
-* Ê¹ÓÃÊÓ¾õÄ£¿é¸ø³öµÄÍ¿½ºÂÖÀª£¨Í¼Æ¬×ø±êÏµ£©£¬
-* »ñµÃÊÀ½ç×ø±êÏµÏÂÊµ¼ÊÒªµ½´ïµÄ¶¯Ì¬Í¿½º¾­¹ıµã
+* @brief    è½¨è¿¹è§„åˆ’æ¨¡å—
+* ä½¿ç”¨è§†è§‰æ¨¡å—ç»™å‡ºçš„æ¶‚èƒ¶è½®å»“ï¼ˆå›¾ç‰‡åæ ‡ç³»ï¼‰ï¼Œ
+* è·å¾—ä¸–ç•Œåæ ‡ç³»ä¸‹å®é™…è¦åˆ°è¾¾çš„åŠ¨æ€æ¶‚èƒ¶ç»è¿‡ç‚¹
 **************************************************************/
 
 #include<stdio.h>
@@ -20,23 +20,31 @@
 using namespace std;
 using namespace cv;
 
-/**
+/**	
  * @name	SampleOnContour
- * @brief	ÔÚÍ¿½ºÂÖÀªÉÏ²ÉÑù
- * @param	contour	´ı´¦ÀíµÄÍ¿½ºÂÖÀª
- * @return	²ÉÑùµã×é£¬vector<Point>ĞÎÊ½
+ * @brief	åœ¨æ¶‚èƒ¶è½®å»“ä¸Šé‡‡æ ·
+	ç­‰é—´è·å–10ä¸ªç‚¹
+ * @param	contour	å¾…å¤„ç†çš„æ¶‚èƒ¶è½®å»“
+ * @return	é‡‡æ ·ç‚¹ç»„ï¼Œvector<Point>å½¢å¼
  * @note	
  */
 vector<Point> SampleOnContour(vector<Point> contour) {
-	vector<Point> points;
-	return points;
+	vector<Point> sample_points;	//é‡‡æ ·ç‚¹æ•°ç»„
+	Point cur_point;	//å½“å‰ç‚¹		
+	int point_num = contour.size();	//è½®å»“ä¸Šæ€»ç‚¹æ•°
+	int step = point_num / 10;		//é‡‡æ ·ç‚¹æ•°
+	for (int i = 0; i < point_num; i += step) {
+		cur_point = contour[i];
+		sample_points.push_back(cur_point);
+	}
+	return sample_points;
 }
 
 /**
  * @name	Transform
- * @brief	×ª»¯µ½ÊÀ½ç×ø±êÏµÏÂ£¬µÃµ½¾²Ì¬Í¿½º¾­¹ıµã£¨´«ËÍ´ø¾²Ö¹£©
- * @param	points_in_pic	Í¼Æ¬×ø±êÏµÏÂµÄ²ÉÑùµã
- * @return	ÊÀ½ç×ø±êÏµÏÂµÄ¾²Ì¬Í¿½º¾­¹ıµã
+ * @brief	è½¬åŒ–åˆ°ä¸–ç•Œåæ ‡ç³»ä¸‹ï¼Œå¾—åˆ°é™æ€æ¶‚èƒ¶ç»è¿‡ç‚¹ï¼ˆä¼ é€å¸¦é™æ­¢ï¼‰
+ * @param	points_in_pic	å›¾ç‰‡åæ ‡ç³»ä¸‹çš„é‡‡æ ·ç‚¹
+ * @return	ä¸–ç•Œåæ ‡ç³»ä¸‹çš„é™æ€æ¶‚èƒ¶ç»è¿‡ç‚¹
  * @note
  */
 vector<Point> Transform(vector<Point> points_in_pic) {
@@ -46,18 +54,25 @@ vector<Point> Transform(vector<Point> points_in_pic) {
 
 /**
  * @name	Dynamicalize
- * @brief	»ñµÃ¶¯Ì¬Í¿½º¾­¹ıµã
-	½áºÏ´«ËÍ´øËÙ¶ÈºÍ¸÷µãµÄÊ±¼ä²î£¬¹æ»®³ö´«ËÍ´øÔËĞĞµÄÇé¿öÏÂ£¬»úĞµ±ÛÄ©¶ËÒªµ½´ïµÄ¸÷µã×ø±ê£»
-	¼´¸÷¾²Ì¬Í¿½º¾­¹ıµãµÄy£¨´«ËÍ´øÔËĞĞ·½Ïò£©×ø±êÒÀ´Î¼Óv*dt,2*v*dt,3*v*dt...£»
-	ÆäÖĞvÊÇ´«ËÍ´øËÙ¶È£¬dtÊÇÏàÁÚÁ½µã¼äµÄÊ±¼ä²î¡£
- * @param	points_s	¾²Ì¬Í¿½º¾­¹ıµã
- * @param	v	´«ËÍ´øËÙ¶È
- * @param	dt	ÏàÁÚÁ½µãµÄÊ±¼ä²î
- * @return	ÊÀ½ç×ø±êÏµÏÂµÄ¶¯Ì¬Í¿½º¾­¹ıµã
+ * @brief	è·å¾—åŠ¨æ€æ¶‚èƒ¶ç»è¿‡ç‚¹
+	ç»“åˆä¼ é€å¸¦é€Ÿåº¦å’Œå„ç‚¹çš„æ—¶é—´å·®ï¼Œè§„åˆ’å‡ºä¼ é€å¸¦è¿è¡Œçš„æƒ…å†µä¸‹ï¼Œæœºæ¢°è‡‚æœ«ç«¯è¦åˆ°è¾¾çš„å„ç‚¹åæ ‡ï¼›
+	å³å„é™æ€æ¶‚èƒ¶ç»è¿‡ç‚¹çš„yï¼ˆä¼ é€å¸¦è¿è¡Œæ–¹å‘ï¼‰åæ ‡ä¾æ¬¡åŠ v*t0,v*(dt+t0),v*(2dt+t0)...ï¼›
+	å…¶ä¸­væ˜¯ä¼ é€å¸¦é€Ÿåº¦ï¼Œdtæ˜¯ç›¸é‚»ä¸¤ç‚¹é—´çš„æ—¶é—´å·®ï¼Œt0ä¸ºèµ·å§‹æ¶‚èƒ¶æ—¶åˆ»å’Œæ‹ç…§æ—¶åˆ»çš„æ—¶é—´å·®
+ * @param	points_s	é™æ€æ¶‚èƒ¶ç»è¿‡ç‚¹
+ * @param	v	ä¼ é€å¸¦é€Ÿåº¦
+ * @param	dt	ç›¸é‚»ä¸¤ç‚¹çš„æ—¶é—´å·®
+ * @return	ä¸–ç•Œåæ ‡ç³»ä¸‹çš„åŠ¨æ€æ¶‚èƒ¶ç»è¿‡ç‚¹
  * @note
  */
 vector<Point> Dynamicalize(vector<Point> points_s, double v, double dt) {
-	vector<Point> points_d;
+	vector<Point> points_d;	//å¾…è¿”å›çš„åŠ¨æ€æ¶‚èƒ¶ç»è¿‡ç‚¹æ•°ç»„
+	Point cur_point;	//å½“å‰ç‚¹		
+	int points_num = points_s.size();	//ç‚¹çš„ä¸ªæ•°
+	double t0 = 1.0;
+	for (int i = 0; i < points_num; i++) {
+		cur_point.x = points_s[i].x;
+		cur_point.y = points_s[i].y+t0+i*dt;
+	}
 	return points_d;
 }
 
