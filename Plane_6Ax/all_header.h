@@ -1,4 +1,4 @@
-//包含camer.cpp planner.cpp control.cpp 三个文件中函数的声明
+//鍖呭惈camer.cpp planner.cpp control.cpp 涓変釜鏂囦欢涓嚱鏁扮殑澹版槑
 
 #pragma once
 #include<stdio.h>
@@ -17,4 +17,4 @@ vector<Point> SampleOnContour(vector<Point> contour);
 vector<Point> Transform(vector<Point> points_in_pic);
 vector<Point> Dynamicalize(vector<Point> points_s, double v, double dt);
 int InitArm();
-int Glue(vector<Point> points);
+void Glue(vector<Point> points, double dt);
