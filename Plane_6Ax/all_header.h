@@ -7,14 +7,22 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
+#include <SDL_opengl.h>
+#include <SDL.h>
+#include <SDL_main.h>
+#include <Kinect.h>
 using namespace std;
 using namespace cv;
 
-int InitCamera();
+bool InitKinect();
+void getKinectData(GLubyte* dest);
 vector<Point> GetGlueContour();
 double GetBeltVelocity();
+//void CloseCamera();
+
 vector<Point> SampleOnContour(vector<Point> contour);
-vector<Point> Transform(vector<Point> points_in_pic);
-vector<Point> Dynamicalize(vector<Point> points_s, double v, double dt);
+vector<Point3d> Transform(vector<Point> points_in_pic);
+vector<Point3d> Dynamicalize(vector<Point3d> points_s, double v, double dt, double t0);
+
 int InitArm();
-void Glue(vector<Point> points, double dt);
+void Glue(vector<Point3d> points, double dt);
