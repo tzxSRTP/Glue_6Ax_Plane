@@ -1,6 +1,6 @@
 /**************************************************************
 * @file     image_process_function.cpp
-* @brief    Í¼Ïñ´¦Àíº¯Êı¿â
+* @brief    å›¾åƒå¤„ç†å‡½æ•°åº“
 ***************************************************************/
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
@@ -20,47 +20,47 @@ using namespace std;
 using namespace cv;
 
 const int Blur_size = 11;
-const double Canny_low_threshold = 100;//cannyµÍãĞÖµ
-const double Canny_high_threshold = 300;//canny¸ßãĞÖµ
+const double Canny_low_threshold = 100;//cannyä½é˜ˆå€¼
+const double Canny_high_threshold = 300;//cannyé«˜é˜ˆå€¼
 
 
 /**
  * @name	img_process_edge
- * @brief	´ÓºÚ°×Í¼»ñÈ¡±ßÔµ
- * @param	source_Img	´ı´¦ÀíµÄÍ¼Æ¬µÄÖ¸Õë
+ * @brief	ä»é»‘ç™½å›¾è·å–è¾¹ç¼˜
+ * @param	source_Img	å¾…å¤„ç†çš„å›¾ç‰‡çš„æŒ‡é’ˆ
  * @return	0
- * @note	¶Ôsource_Img×ö±ßÔµÌáÈ¡¡£Ïà¹Ø²ÎÊıÔÚÈ«¾Ö±äÁ¿ÖĞĞŞ¸Ä
+ * @note	å¯¹source_Imgåšè¾¹ç¼˜æå–ã€‚ç›¸å…³å‚æ•°åœ¨å…¨å±€å˜é‡ä¸­ä¿®æ”¹
  */
 int img_process_edge(cv::Mat& source_Img)
 {
 	medianBlur(source_Img, source_Img, Blur_size);
 	Canny(source_Img, source_Img, Canny_low_threshold, Canny_high_threshold, /*int apertureSize =*/ 3, /*bool L2gradient = */false);
 	return 0;
-	/*µÚÒ»¸ö²ÎÊı£¬InputArrayÀàĞÍµÄimage£¬ÊäÈëÍ¼Ïñ£¬¼´Ô´Í¼Ïñ£¬ÌîMatÀàµÄ¶ÔÏó¼´¿É£¬ÇÒĞèÎªµ¥Í¨µÀ8Î»Í¼Ïñ¡£
-	  µÚ¶ş¸ö²ÎÊı£¬OutputArrayÀàĞÍµÄedges£¬Êä³öµÄ±ßÔµÍ¼£¬ĞèÒªºÍÔ´Í¼Æ¬ÓĞÒ»ÑùµÄ³ß´çºÍÀàĞÍ¡£
-	  µÚÈı¸ö²ÎÊı£¬doubleÀàĞÍµÄthreshold1£¬µÚÒ»¸öÖÍºóĞÔãĞÖµ¡£
-	  µÚËÄ¸ö²ÎÊı£¬doubleÀàĞÍµÄthreshold2£¬µÚ¶ş¸öÖÍºóĞÔãĞÖµ¡£
-	  µÚÎå¸ö²ÎÊı£¬intÀàĞÍµÄapertureSize£¬±íÊ¾Ó¦ÓÃSobelËã×ÓµÄ¿×¾¶´óĞ¡£¬ÆäÓĞÄ¬ÈÏÖµ3¡£
-	  µÚÁù¸ö²ÎÊı£¬boolÀàĞÍµÄL2gradient£¬Ò»¸ö¼ÆËãÍ¼ÏñÌİ¶È·ùÖµµÄ±êÊ¶£¬ÓĞÄ¬ÈÏÖµfalse¡£
-	  ĞèÒª×¢ÒâµÄÊÇ£¬Õâ¸öº¯ÊıãĞÖµ1ºÍãĞÖµ2Á½ÕßµÄĞ¡ÕßÓÃÓÚ±ßÔµÁ¬½Ó£¬¶ø´óÕßÓÃÀ´¿ØÖÆÇ¿±ßÔµµÄ³õÊ¼¶Î£¬ÍÆ¼öµÄ¸ßµÍãĞÖµ±ÈÔÚ2:1µ½3:1Ö®¼ä¡£*/
+	/*ç¬¬ä¸€ä¸ªå‚æ•°ï¼ŒInputArrayç±»å‹çš„imageï¼Œè¾“å…¥å›¾åƒï¼Œå³æºå›¾åƒï¼Œå¡«Matç±»çš„å¯¹è±¡å³å¯ï¼Œä¸”éœ€ä¸ºå•é€šé“8ä½å›¾åƒã€‚
+	  ç¬¬äºŒä¸ªå‚æ•°ï¼ŒOutputArrayç±»å‹çš„edgesï¼Œè¾“å‡ºçš„è¾¹ç¼˜å›¾ï¼Œéœ€è¦å’Œæºå›¾ç‰‡æœ‰ä¸€æ ·çš„å°ºå¯¸å’Œç±»å‹ã€‚
+	  ç¬¬ä¸‰ä¸ªå‚æ•°ï¼Œdoubleç±»å‹çš„threshold1ï¼Œç¬¬ä¸€ä¸ªæ»åæ€§é˜ˆå€¼ã€‚
+	  ç¬¬å››ä¸ªå‚æ•°ï¼Œdoubleç±»å‹çš„threshold2ï¼Œç¬¬äºŒä¸ªæ»åæ€§é˜ˆå€¼ã€‚
+	  ç¬¬äº”ä¸ªå‚æ•°ï¼Œintç±»å‹çš„apertureSizeï¼Œè¡¨ç¤ºåº”ç”¨Sobelç®—å­çš„å­”å¾„å¤§å°ï¼Œå…¶æœ‰é»˜è®¤å€¼3ã€‚
+	  ç¬¬å…­ä¸ªå‚æ•°ï¼Œboolç±»å‹çš„L2gradientï¼Œä¸€ä¸ªè®¡ç®—å›¾åƒæ¢¯åº¦å¹…å€¼çš„æ ‡è¯†ï¼Œæœ‰é»˜è®¤å€¼falseã€‚
+	  éœ€è¦æ³¨æ„çš„æ˜¯ï¼Œè¿™ä¸ªå‡½æ•°é˜ˆå€¼1å’Œé˜ˆå€¼2ä¸¤è€…çš„å°è€…ç”¨äºè¾¹ç¼˜è¿æ¥ï¼Œè€Œå¤§è€…ç”¨æ¥æ§åˆ¶å¼ºè¾¹ç¼˜çš„åˆå§‹æ®µï¼Œæ¨èçš„é«˜ä½é˜ˆå€¼æ¯”åœ¨2:1åˆ°3:1ä¹‹é—´ã€‚*/
 }
 
 
 /**
  * @name	img_process_convert
- * @brief	½«RGBÍ¼×ª»»³ÉHSVÍ¼Ïñ£¬²¢½øĞĞÖĞÖµÂË²¨
- * @param	source_Img	´ı´¦ÀíµÄÍ¼Æ¬µÄÖ¸Õë
+ * @brief	å°†RGBå›¾è½¬æ¢æˆHSVå›¾åƒï¼Œå¹¶è¿›è¡Œä¸­å€¼æ»¤æ³¢
+ * @param	source_Img	å¾…å¤„ç†çš„å›¾ç‰‡çš„æŒ‡é’ˆ
  * @return	0
- * @note	¶Ôsource_Img×ö×ª»»¡£Ïà¹Ø²ÎÊıÔÚÈ«¾Ö±äÁ¿ÖĞĞŞ¸Ä
+ * @note	å¯¹source_Imgåšè½¬æ¢ã€‚ç›¸å…³å‚æ•°åœ¨å…¨å±€å˜é‡ä¸­ä¿®æ”¹
  */
 int img_process_convert(cv::Mat& source_Img)
 {
 
 	cvtColor(source_Img, source_Img, COLOR_BGR2HSV);
 	//imshow("HSV", source_Img);
-	//cv::COLOR_BGR2HSV = 40,ÍøÉÏ²éµÄ
-	medianBlur(source_Img, source_Img, Blur_size);//ÖĞÖµÂË²¨ÊÇ·ÇÏßĞÔÂË²¨£¬Ëü½«ÂË²¨Æ÷Ëù°üº¬µÄÍ¼ÏñÇøÓò½øĞĞÅÅĞò£¬
-												  //Ñ¡È¡ÖĞ¼äÖµ´úÌæ¸ÃµãÏñËØÖµ£¬Æä¶Ô½·ÑÎÔëÉù´¦ÀíÊ®·ÖÓĞĞ§
+	//cv::COLOR_BGR2HSV = 40,ç½‘ä¸ŠæŸ¥çš„
+	medianBlur(source_Img, source_Img, Blur_size);//ä¸­å€¼æ»¤æ³¢æ˜¯éçº¿æ€§æ»¤æ³¢ï¼Œå®ƒå°†æ»¤æ³¢å™¨æ‰€åŒ…å«çš„å›¾åƒåŒºåŸŸè¿›è¡Œæ’åºï¼Œ
+												  //é€‰å–ä¸­é—´å€¼ä»£æ›¿è¯¥ç‚¹åƒç´ å€¼ï¼Œå…¶å¯¹æ¤’ç›å™ªå£°å¤„ç†ååˆ†æœ‰æ•ˆ
 	return 0;
 }
 
@@ -68,54 +68,56 @@ int img_process_convert(cv::Mat& source_Img)
 
 /**
  * @name	img_process_getcolor
- * @brief	Í¼Ïñ·Ö¸î£¬µÃµ½ºÚ°×Í¼Ïñ
- * @param	source_Img	´ı´¦ÀíµÄÍ¼Æ¬µÄÖ¸Õë
+ * @brief	å›¾åƒåˆ†å‰²ï¼Œå¾—åˆ°é»‘ç™½å›¾åƒ
+ * @param	source_Img	å¾…å¤„ç†çš„å›¾ç‰‡çš„æŒ‡é’ˆ
  * @return	0
- * @note	ÑÕÉ«ãĞÖµÔÚinRange()º¯ÊıÖĞĞŞ¸Ä
+ * @note	é¢œè‰²é˜ˆå€¼åœ¨inRange()å‡½æ•°ä¸­ä¿®æ”¹
  */
 int img_process_getcolor(cv::Mat& source_Img)
 {
 
-	//inRange(source_Img, Scalar(0, 150, 130), Scalar(30, 255, 255), source_Img);//ĞÂºìÉ«
-	inRange(source_Img, Scalar(0, 200, 0), Scalar(150, 255, 150), source_Img); //rgbÂÌÉ«
-
-	/*inRangeº¯Êı¿ÉÒÔ½«Ö¸¶¨ÑÕÉ«×ª»¯Îª°×É«£¬ÆäËûÑÕÉ«×ª»¯ÎªºÚÉ«.
-	µÚÒ»¸ö±äÁ¿ÎªÊäÈëµÄhsvÍ¼Æ¬£¬µÚ¶ş¸öÊÇÄ³ÑÕÉ«¶ÔÓ¦µÄhsv_minÖµ£¬µÚÈı¸öÊÇÄ³ÑÕÉ«¶ÔÓ¦µÄhsv_maxÖµ,µÚËÄ¸öÊÇÊä³öµÄÍ¼Ïñ*/
+	//inRange(source_Img, Scalar(0, 150, 130), Scalar(30, 255, 255), source_Img);//æ–°çº¢è‰²
+	//inRange(source_Img, Scalar(0, 120, 0, 0), Scalar(140, 255, 150, 255), source_Img); //bgrç»¿è‰²
+	//inRange(source_Img, Scalar(0, 0, 160, 0), Scalar(120, 120, 255, 255), source_Img); //bgrçº¢è‰²
+	inRange(source_Img, Scalar(0, 200, 200, 0), Scalar(100, 255, 255, 255), source_Img); //bgré»„è‰²
+	//inRange(source_Img, Scalar(0, 0, 150, 0), Scalar(150, 150, 255, 255), source_Img);
+	/*inRangeå‡½æ•°å¯ä»¥å°†æŒ‡å®šé¢œè‰²è½¬åŒ–ä¸ºç™½è‰²ï¼Œå…¶ä»–é¢œè‰²è½¬åŒ–ä¸ºé»‘è‰².
+	ç¬¬ä¸€ä¸ªå˜é‡ä¸ºè¾“å…¥çš„hsvå›¾ç‰‡ï¼Œç¬¬äºŒä¸ªæ˜¯æŸé¢œè‰²å¯¹åº”çš„hsv_minå€¼ï¼Œç¬¬ä¸‰ä¸ªæ˜¯æŸé¢œè‰²å¯¹åº”çš„hsv_maxå€¼,ç¬¬å››ä¸ªæ˜¯è¾“å‡ºçš„å›¾åƒ*/
 	return 0;
 }
 
 
 /**
  * @name	img_process_barycenter
- * @brief	¼ÆËã¸ø¶¨Í¼Æ¬µÄÖÊĞÄ×ø±ê
- * @param	source_Img	´ı´¦ÀíµÄÍ¼Æ¬µÄÖ¸Õë
- * @param	px	ÖÊĞÄx×ø±êµÄÖ¸Õë
- * @param	py	ÖÊĞÄy×ø±êµÄÖ¸Õë
+ * @brief	è®¡ç®—ç»™å®šå›¾ç‰‡çš„è´¨å¿ƒåæ ‡
+ * @param	source_Img	å¾…å¤„ç†çš„å›¾ç‰‡çš„æŒ‡é’ˆ
+ * @param	px	è´¨å¿ƒxåæ ‡çš„æŒ‡é’ˆ
+ * @param	py	è´¨å¿ƒyåæ ‡çš„æŒ‡é’ˆ
  * @return	0
  * @note
  */
 int img_process_barycenter(Mat& source_Img, int& px, int& py)
 {
-	// find moments of the image ÌáÈ¡¶şÖµÍ¼Ïñ¾Ø£¬true±íÊ¾Í¼Ïñ¶şÖµ»¯ÁË
+	// find moments of the image æå–äºŒå€¼å›¾åƒçŸ©ï¼Œtrueè¡¨ç¤ºå›¾åƒäºŒå€¼åŒ–äº†
 	Moments m = moments(source_Img, true);
-	//ÕâÀïµÄtrue±íÊ¾¶şÖµ»¯´¦Àí£¬ËùÓĞ·ÇÁãÏñËØ£¬¶¼ÓÃ1À´Ìæ´ú
+	//è¿™é‡Œçš„trueè¡¨ç¤ºäºŒå€¼åŒ–å¤„ç†ï¼Œæ‰€æœ‰éé›¶åƒç´ ï¼Œéƒ½ç”¨1æ¥æ›¿ä»£
 	//Point p(m.m10 / m.m00, m.m01 / m.m00);
 	px = m.m10 / m.m00;
 	py = m.m01 / m.m00;
 
-	// coordinates of centroid ÖÊĞÄ×ø±ê
-	printf("\nÖÊĞÄ(%f, %f)\n", px * 0.5, py * 0.5);
-	//cout << "ÎïÌåÖÊĞÄ×ø±ê:" << (px, py) << endl;
+	// coordinates of centroid è´¨å¿ƒåæ ‡
+	printf("\nè´¨å¿ƒ(%f, %f)\n", px * 0.5, py * 0.5);
+	//cout << "ç‰©ä½“è´¨å¿ƒåæ ‡:" << (px, py) << endl;
 	return 0;
 }
 
 
 /**
  * @name	img_process_contourclassify
- * @brief	¼ÆËã¸ø¶¨ÂÖÀªÍ¼ÏñÖĞÔ²ĞÎºÍ¾ØĞÎµÄ¸öÊı£¨Í¨¹ı¹ÕµãÊı£©
- * @param	source_Img	´ı´¦ÀíµÄÍ¼Æ¬µÄÖ¸Õë
- * @param	num_circles	Ô²ĞÎ¸öÊıµÄÖ¸Õë
- * @param	num_circles	Ô²ĞÎ¸öÊıµÄÖ¸Õë
+ * @brief	è®¡ç®—ç»™å®šè½®å»“å›¾åƒä¸­åœ†å½¢å’ŒçŸ©å½¢çš„ä¸ªæ•°ï¼ˆé€šè¿‡æ‹ç‚¹æ•°ï¼‰
+ * @param	source_Img	å¾…å¤„ç†çš„å›¾ç‰‡çš„æŒ‡é’ˆ
+ * @param	num_circles	åœ†å½¢ä¸ªæ•°çš„æŒ‡é’ˆ
+ * @param	num_circles	åœ†å½¢ä¸ªæ•°çš„æŒ‡é’ˆ
  * @return	0
  * @note
  */
@@ -125,22 +127,22 @@ int img_process_contourclassify(cv::Mat source_Img, int& num_circles, int& num_r
 	vector<Vec4i> hireachy;
 	vector<Point> point;
 	findContours(source_Img, contours, hireachy, CV_RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point());
-	/*µÚÒ»¸ö²ÎÊıÊÇ¾­¹ı¶şÖµ»¯´¦ÀíµÄÍ¼Ïñ
-	µÚ¶ş¸ö²ÎÊıcontoursÊÇÂÖÀªµÄÈİÆ÷£¬Ã¿Ò»¸öÂÖÀªÊÇvector<Point>,contoursÊÇvector<vector<Point>>
-	µÚÈı¸ö²ÎÊı´¢´æ Ç°ºóÂÖÀªµÄ±àºÅ£¨ÓÃÓÚË÷Òı
-	µÚËÄ¸öº¯Êı¶¨Òå¼ìË÷Ä£Ê½£¬CV_RETR_EXTERNAL±íÊ¾Ö»¼ì²â×îÍâÎ§ÂÖÀª
-	µÚÎå¸ö²ÎÊı¶¨ÒåÂÖÀª½üËÆ·½·¨£¬CHAIN_APPROX_SIMPLE±íÊ¾Ö»±£´æÂÖÀª¹ÕµãĞÅÏ¢
-	µÚÁù¸ö²ÎÊıPointÆ«ÒÆÁ¿£¬Ïàµ±ÓÚÔÚÃ¿Ò»¸ö¼ì²â³öµÄÂÖÀªµã£¬Ôö¼ÓÒ»¸öÆ«ÒÆÁ¿*/
+	/*ç¬¬ä¸€ä¸ªå‚æ•°æ˜¯ç»è¿‡äºŒå€¼åŒ–å¤„ç†çš„å›¾åƒ
+	ç¬¬äºŒä¸ªå‚æ•°contoursæ˜¯è½®å»“çš„å®¹å™¨ï¼Œæ¯ä¸€ä¸ªè½®å»“æ˜¯vector<Point>,contoursæ˜¯vector<vector<Point>>
+	ç¬¬ä¸‰ä¸ªå‚æ•°å‚¨å­˜ å‰åè½®å»“çš„ç¼–å·ï¼ˆç”¨äºç´¢å¼•
+	ç¬¬å››ä¸ªå‡½æ•°å®šä¹‰æ£€ç´¢æ¨¡å¼ï¼ŒCV_RETR_EXTERNALè¡¨ç¤ºåªæ£€æµ‹æœ€å¤–å›´è½®å»“
+	ç¬¬äº”ä¸ªå‚æ•°å®šä¹‰è½®å»“è¿‘ä¼¼æ–¹æ³•ï¼ŒCHAIN_APPROX_SIMPLEè¡¨ç¤ºåªä¿å­˜è½®å»“æ‹ç‚¹ä¿¡æ¯
+	ç¬¬å…­ä¸ªå‚æ•°Pointåç§»é‡ï¼Œç›¸å½“äºåœ¨æ¯ä¸€ä¸ªæ£€æµ‹å‡ºçš„è½®å»“ç‚¹ï¼Œå¢åŠ ä¸€ä¸ªåç§»é‡*/
 
 	for (size_t t = 0; t < contours.size(); t++)
 	{
 		int epsilon = 0.05 * arcLength(contours[t], true);
 		approxPolyDP(contours[t], point, epsilon, true);
-		/*InputArray curve£ºÊäÈëÇúÏß£¬Êı¾İÀàĞÍ¿ÉÒÔÎªvector<Point>¡£
-		OutputArray approxCurve£ºÊä³öÕÛÏß£¬Êı¾İÀàĞÍ¿ÉÒÔÎªvector<Point>¡£
-		double epsilon£ºÅĞ¶Ïµãµ½Ïà¶ÔÓ¦µÄline segment µÄ¾àÀëµÄãĞÖµ¡£
-		£¨¾àÀë´óÓÚ´ËãĞÖµÔòÉáÆú£¬Ğ¡ÓÚ´ËãĞÖµÔò±£Áô£¬epsilonÔ½Ğ¡£¬ÕÛÏßµÄĞÎ×´Ô½¡°½Ó½ü¡±ÇúÏß¡££©
-		bool closed£ºÇúÏßÊÇ·ñ±ÕºÏµÄ±êÖ¾Î»¡£*/
+		/*InputArray curveï¼šè¾“å…¥æ›²çº¿ï¼Œæ•°æ®ç±»å‹å¯ä»¥ä¸ºvector<Point>ã€‚
+		OutputArray approxCurveï¼šè¾“å‡ºæŠ˜çº¿ï¼Œæ•°æ®ç±»å‹å¯ä»¥ä¸ºvector<Point>ã€‚
+		double epsilonï¼šåˆ¤æ–­ç‚¹åˆ°ç›¸å¯¹åº”çš„line segment çš„è·ç¦»çš„é˜ˆå€¼ã€‚
+		ï¼ˆè·ç¦»å¤§äºæ­¤é˜ˆå€¼åˆ™èˆå¼ƒï¼Œå°äºæ­¤é˜ˆå€¼åˆ™ä¿ç•™ï¼Œepsilonè¶Šå°ï¼ŒæŠ˜çº¿çš„å½¢çŠ¶è¶Šâ€œæ¥è¿‘â€æ›²çº¿ã€‚ï¼‰
+		bool closedï¼šæ›²çº¿æ˜¯å¦é—­åˆçš„æ ‡å¿—ä½ã€‚*/
 		if (point.size() == 4)
 		{
 			num_rect = num_rect + 1;
@@ -155,9 +157,9 @@ int img_process_contourclassify(cv::Mat source_Img, int& num_circles, int& num_r
 
 /**
  * @name	img_process_getcontour
- * @brief	»ñÈ¡ÂÖÀª£¨¸÷¸öÂÖÀª±£´æÔÚÈİÆ÷Àï£©
- * @param	source_Img	´ı´¦ÀíµÄÍ¼Æ¬µÄÖ¸Õë
- * @param	new_contours	ÂÖÀªµÄÈİÆ÷
+ * @brief	è·å–è½®å»“ï¼ˆå„ä¸ªè½®å»“ä¿å­˜åœ¨å®¹å™¨é‡Œï¼‰
+ * @param	source_Img	å¾…å¤„ç†çš„å›¾ç‰‡çš„æŒ‡é’ˆ
+ * @param	new_contours	è½®å»“çš„å®¹å™¨
  * @return	0
  * @note
  */
@@ -167,23 +169,23 @@ int img_process_getcontour(cv::Mat source_Img, vector<vector<Point>>& new_contou
 	vector<Vec4i> hireachy;
 	vector<Point> point;
 	findContours(source_Img, contours, hireachy, CV_RETR_EXTERNAL, CHAIN_APPROX_SIMPLE, Point());
-	//ÓëÉÏÒ»¸öº¯ÊıÖĞµÄfindContoursÊÇÒ»ÑùµÄ
+	//ä¸ä¸Šä¸€ä¸ªå‡½æ•°ä¸­çš„findContoursæ˜¯ä¸€æ ·çš„
 	for (size_t t = 0; t < contours.size(); t++)
 	{
 		new_contours.push_back(contours[t]);
 	}
-	//ºÜÆæ¹Ö£¬ÏÈÓÃfindContoursº¯Êı°ÑÂÖÀª±£´æÔÚÁËcontoursÈİÆ÷Àï£¬È»ºóÓÖÅ²µ½ÁËnew_contoursÀï¡£
-	//°´ËµÖ±½Ó°Ñº¯ÊıÀïµÄcontours»»³É´«ÈëµÄnew_contours¾ÍºÃÁË
+	//å¾ˆå¥‡æ€ªï¼Œå…ˆç”¨findContourså‡½æ•°æŠŠè½®å»“ä¿å­˜åœ¨äº†contourså®¹å™¨é‡Œï¼Œç„¶ååˆæŒªåˆ°äº†new_contoursé‡Œã€‚
+	//æŒ‰è¯´ç›´æ¥æŠŠå‡½æ•°é‡Œçš„contoursæ¢æˆä¼ å…¥çš„new_contourså°±å¥½äº†
 	return(0);
 }
 
 /**
  * @name	img_process_erode
- * @brief	¸¯Ê´´ı´¦ÀíÍ¼Ïñ,µÃµ½Æä¸¯Ê´ºóµÄÂÖÀª£¨contour£©
- * @param	source_Img	´ı´¦ÀíµÄÍ¼Æ¬µÄÖ¸Õë
- * @param	kernel	¸¯Ê´ºËĞÄ
- * @param	output_contours	µÃµ½µÄÂÖÀª
- * @param	times	¸¯Ê´´ÎÊı
+ * @brief	è…èš€å¾…å¤„ç†å›¾åƒ,å¾—åˆ°å…¶è…èš€åçš„è½®å»“ï¼ˆcontourï¼‰
+ * @param	source_Img	å¾…å¤„ç†çš„å›¾ç‰‡çš„æŒ‡é’ˆ
+ * @param	kernel	è…èš€æ ¸å¿ƒ
+ * @param	output_contours	å¾—åˆ°çš„è½®å»“
+ * @param	times	è…èš€æ¬¡æ•°
  * @return	0
  * @note
  */
@@ -191,13 +193,14 @@ void img_process_erode(cv::Mat source_Img, Mat kernel, vector<vector<Point>>& ou
 {
 	Mat res;
 	Mat src = source_Img;
-	for (int i = 0; i < times; i++)//¸¯Ê´step´Î¡£
+	for (int i = 0; i < times; i++)//è…èš€stepæ¬¡ã€‚
 	{
-		erode(src, res, kernel);//¸¯Ê´½á¹û±£´æÔÚresÖĞ
-		imshow("eroding", res);
-		waitKey(0);
+		erode(src, res, kernel);//è…èš€ç»“æœä¿å­˜åœ¨resä¸­
+		//namedWindow("eroding", WINDOW_GUI_NORMAL);
+		//imshow("eroding", res);
+		//waitKey(0);
 		src = res;
 	}
-	threshold(res, res, 100, 255, THRESH_BINARY); //¶şÖµ»¯£¬¸ßÓÚ100µÄ¸Ä³É255£¬µÍÓÚ100µÄ¸Ä³É0
+	threshold(res, res, 100, 255, THRESH_BINARY); //äºŒå€¼åŒ–ï¼Œé«˜äº100çš„æ”¹æˆ255ï¼Œä½äº100çš„æ”¹æˆ0
 	findContours(res, output_contour, CV_RETR_EXTERNAL, CV_CHAIN_APPROX_NONE);
 }
