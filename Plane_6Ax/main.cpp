@@ -1,62 +1,114 @@
 /*****************************************************************************
 * @file     main.cpp															
-* @brief    Ê¹ÓÃÏà»ú¶Ô´«ËÍ´øÉÏµÄ¹¤¼şÅÄÕÕ£¬²¢¿ØÖÆ»úĞµ±ÛÔÚÆä±íÃæÍ¿½º			
-* ³ÌĞòÁ÷³Ì¿É·ÖÎªÒÔÏÂ¼¸¸ö²¿·Ö£º													
-*		1¡¢³õÊ¼»¯Ïà»ú£»															
-*		2¡¢»ñÈ¡Í¼Æ¬×ø±êÏµÏÂµÄÍ¿½ºÂÖÀª£¬²¢»ñÈ¡´«ËÍ´øËÙ¶È£»
-*		3¡¢²ÉÑùµÃµ½Èô¸É²ÉÑùµã£»
-*		4¡¢×ø±ê±ä»»£¬×ª»¯µ½ÊÀ½ç×ø±êÏµÏÂ£¬µÃµ½¾²Ì¬Í¿½º¾­¹ıµã£¨´«ËÍ´ø¾²Ö¹£©£»
-*		5¡¢½áºÏ´«ËÍ´øËÙ¶ÈºÍ¸÷µãµÄÊ±¼ä²î£¬¹æ»®³ö´«ËÍ´øÔËĞĞµÄÇé¿öÏÂ£¬
-*		   »úĞµ±ÛÄ©¶ËÒªµ½´ïµÄ¸÷µã×ø±ê£»
-*		6¡¢¿ØÖÆ»úĞµ±ÛÍ¿½º¡£									
-******************************************************************************/
+* @brief    ä½¿ç”¨ç›¸æœºå¯¹ä¼ é€å¸¦ä¸Šçš„å·¥ä»¶æ‹ç…§ï¼Œå¹¶æ§åˆ¶æœºæ¢°è‡‚åœ¨å…¶è¡¨é¢æ¶‚èƒ¶			
+* ç¨‹åºæµç¨‹å¯åˆ†ä¸ºä»¥ä¸‹å‡ ä¸ªéƒ¨åˆ†ï¼š													
+*		1ã€åˆå§‹åŒ–ç›¸æœºï¼›															
+*		2ã€è·å–å›¾ç‰‡åæ ‡ç³»ä¸‹çš„æ¶‚èƒ¶è½®å»“ï¼Œå¹¶è·å–ä¼ é€å¸¦é€Ÿåº¦ï¼›
+*		3ã€é‡‡æ ·å¾—åˆ°è‹¥å¹²é‡‡æ ·ç‚¹ï¼›
+*		4ã€åæ ‡å˜æ¢ï¼Œè½¬åŒ–åˆ°ä¸–ç•Œåæ ‡ç³»ä¸‹ï¼Œå¾—åˆ°é™æ€æ¶‚èƒ¶ç»è¿‡ç‚¹ï¼ˆä¼ é€å¸¦é™æ­¢ï¼‰ï¼›
+*		5ã€ç»“åˆä¼ é€å¸¦é€Ÿåº¦å’Œå„ç‚¹çš„æ—¶é—´å·®ï¼Œè§„åˆ’å‡ºä¼ é€å¸¦è¿è¡Œçš„æƒ…å†µä¸‹ï¼Œ
+*		   æœºæ¢°è‡‚æœ«ç«¯è¦åˆ°è¾¾çš„å„ç‚¹åæ ‡ï¼›
+*		6ã€æ§åˆ¶æœºæ¢°è‡‚æ¶‚èƒ¶ã€‚									
+******************************************************************************/ 
 
-
-#include<iostream>
-#include<stdio.h>
+//#pragma comment(lib, "k4a.lib")
+//#include <k4a/k4a.h>
+#include <iostream>
+#include <stdio.h>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include"all_header.h"
+#include "all_header.h"
+
+//#include <SDL_opengl.h>
+//#include <SDL.h>
+//#include <SDL_main.h>
+//#include <Kinect.h>
+//#pragma comment(lib,"legacy_stdio_definitions.lib")
+//extern "C" { FILE __iob_func[3] = { *stdin,*stdout,*stderr }; }
 
 
 using namespace std;
 using namespace cv;
 
-int main() {
-	vector<Point> contour_in_pic;	//ÊÓ¾õÄ£¿é»ñµÃµÄÍ¿½ºÂÖÀª(Í¼Æ¬×ø±êÏµ£©
-	vector<Point> points_in_pic;	//ÂÖÀªÉÏµÄ²ÉÑùµã£¨Í¼Æ¬×ø±êÏµ£©
-	vector<Point> points_in_world_s;	//¾²Ì¬Í¿½º¾­¹ıµã£¨ÊÀ½ç×ø±êÏµ£©
-	vector<Point> points_in_world_d;	//¶¯Ì¬Í¿½º¾­¹ıµã£¨ÊÀ½ç×ø±êÏµ£©
-	double v_belt;		//´«ËÍ´øËÙ¶È
-	double dt=0.5;			//ÏàÁÚÍ¿½ºµã¼äµÄÊ±¼ä¼ä¸ô
+int main(int argc, char* argv[]) {
+	vector<Point> contour_in_pic;	//è§†è§‰æ¨¡å—è·å¾—çš„æ¶‚èƒ¶è½®å»“(å›¾ç‰‡åæ ‡ç³»ï¼‰
+	vector<Point> points_in_pic;	//è½®å»“ä¸Šçš„é‡‡æ ·ç‚¹ï¼ˆå›¾ç‰‡åæ ‡ç³»ï¼‰
+	vector<Point3d> points_in_world_s;	//é™æ€æ¶‚èƒ¶ç»è¿‡ç‚¹ï¼ˆä¸–ç•Œåæ ‡ç³»ï¼‰
+	vector<Point3d> points_in_world_d;	//åŠ¨æ€æ¶‚èƒ¶ç»è¿‡ç‚¹ï¼ˆä¸–ç•Œåæ ‡ç³»ï¼‰
+	double v_belt;		//ä¼ é€å¸¦é€Ÿåº¦
+	double dt=0.3;			//ç›¸é‚»æ¶‚èƒ¶ç‚¹é—´çš„æ—¶é—´é—´éš”
+	double t0 = 3;		//èµ·å§‹ç‚¹åˆ°ç¬¬ä¸€ä¸ªæ¶‚èƒ¶ç‚¹çš„æ—¶é—´å·®
 	
-	//³õÊ¼»¯Ïà»ú
-	printf("Initializing camera...");
-	if (!InitCamera()) {
-		printf("failed!\n");
+	//åˆå§‹åŒ–ç›¸æœº
+	if (!InitKinect()) {
+		printf("Initializing camera...failed!\n");
 		return 0;
 	}
-	printf("succeed!\n");
+	printf("Initializing camera...succeed!\n");
+
+	//åˆå§‹åŒ–æœºæ¢°è‡‚
+	if (!InitArm()) {
+		printf("Initializing Arm...failed!\n");
+		return 0;
+	}
+	printf("Initializing Arm...succeed!\n");
 	
-	//»ñÈ¡Í¼Æ¬×ø±êÏµÏÂµÄÍ¿½ºÂÖÀª£¬ºÍ´«ËÍ´øËÙ¶È
+	//è·å–å›¾ç‰‡åæ ‡ç³»ä¸‹çš„æ¶‚èƒ¶è½®å»“ï¼Œå’Œä¼ é€å¸¦é€Ÿåº¦
 	contour_in_pic = GetGlueContour();
 	v_belt = GetBeltVelocity();
 
-	//ÔÚÂÖÀªÉÏ²ÉÑù
+	cout << "contour_in_pic[0]" << contour_in_pic[0] << endl;
+	cout << "contour_in_pic[1]" << contour_in_pic[1] << endl;
+	
+	//åœ¨è½®å»“ä¸Šé‡‡æ ·
 	points_in_pic = SampleOnContour(contour_in_pic);
 
-	//×ª»»µ½ÊÀ½ç×ø±êÏµ£¬»ñÈ¡¾²Ì¬Í¿½º¾­¹ıµã
+	/*
+	æ— ç›¸æœºæµ‹è¯•ç‚¹
+	v_belt = 100;
+	points_in_pic.push_back(Point(823, 476));
+	points_in_pic.push_back(Point(808, 490));
+	points_in_pic.push_back(Point(815, 511));
+	points_in_pic.push_back(Point(839, 508));
+	points_in_pic.push_back(Point(845, 486));
+	*/
+	
+	for (int i = 0; i < 5; i++) {
+		cout << points_in_pic[i] << endl;
+	}
+	/*
+	å¦å¤–ä¸€ç§è¾“å‡ºæ ¼å¼
+	for (vector<Point>::iterator it = (&points_in_pic)->begin(); it != (&points_in_pic)->end(); it++) {
+		cout << *it << endl;
+	}
+	*/
+
+	//è½¬æ¢åˆ°ä¸–ç•Œåæ ‡ç³»ï¼Œè·å–é™æ€æ¶‚èƒ¶ç»è¿‡ç‚¹
 	points_in_world_s = Transform(points_in_pic);
+	for (int i = 0; i < 5; i++) {
+		cout << points_in_world_s[i] << endl;
+	}
+	/*
+	for (vector<Point3d>::iterator it = (&points_in_world_s)->begin(); it != (&points_in_world_s)->end(); it++) {
+		cout << *it << endl;
+	}
+	return 0;
+	*/
 
-	//»ñÈ¡´«ËÍ´øÔË¶¯ºóµÄ¶¯Ì¬Í¿½º¾­¹ıµã
-	points_in_world_d = Dynamicalize(points_in_world_d,v_belt,dt);
-
-	//¸ù¾İ¶¯Ì¬Í¿½º¾­¹ıµã£¬¿ØÖÆ»úĞµ±ÛÔË¶¯
-	Glue(points_in_world_d);
+	//è·å–ä¼ é€å¸¦è¿åŠ¨åçš„åŠ¨æ€æ¶‚èƒ¶ç»è¿‡ç‚¹
+	points_in_world_d = Dynamicalize(points_in_world_s,v_belt,dt,t0);
+	printf("\n");
+	for (int i = 0; i < 6; i++) {
+		cout << points_in_world_d[i] << endl;
+	}
+	//æ ¹æ®åŠ¨æ€æ¶‚èƒ¶ç»è¿‡ç‚¹ï¼Œæ§åˆ¶æœºæ¢°è‡‚è¿åŠ¨
+	Glue(points_in_world_d,dt);
 
 	printf("Finish glueing!\n");
+
+	waitKey(0);
 
 	return 0;
 }
