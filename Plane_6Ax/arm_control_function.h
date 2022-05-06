@@ -9,6 +9,11 @@
 
 #pragma comment (lib, "ws2_32.lib")
 
-int pcSocket();
+void Connect();
+void GetPosition(LPVOID n);//接受消息
+void Move(double x, double y, double z, double rx, double ry, double rz, double v);//发送消息
+
+
+
 
 
