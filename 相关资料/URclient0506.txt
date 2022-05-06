@@ -1,0 +1,29 @@
+#5.6更新-加入速度控制
+#本程序实现UR机器人端的socket连接以及控制机器人前往pc端发来的目标点位
+
+ret=False
+while ret==False:
+ret=socket_open("192.168.1.11",5002,soc)
+#注：要在pc端以太网设置相应IP，UR端设置相应IP
+end
+#初始位置，可以更改或删去
+init pos = p[0.25059,0.13805,0,42652,2.911,-1.2,0]
+movej(init_pos, a=1.4, v=1.05, t=0, r=0)
+s0=[0,0,0,0,0,0,0,0]
+while 1:
+l=get_actual_tcp_pose()
+q=get_actual_joint_positions()
+socket_send_string([l[0],l[1],l[2],l[3],l[4],l[5]],"soc")
+s = socket_read_ascii_float(7,"soc")
+while s[0]!=7:
+s=socket_read_ascii_float(7,"soc")
+end
+if s!=s0:
+movep(p[s[1],s[2],s[3],s[4],s[5],s[6]],0.1,s[7],0.005)	#后面三个参数分别为a,v,交融半径r
+end
+s0=s
+end
+
+sleep(0.2)
+socket_close("soc")
+end
