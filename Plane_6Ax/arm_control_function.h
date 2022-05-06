@@ -1,4 +1,4 @@
-//包含arm_control_function.cpp文件总函数的声明
+//鍖呭惈arm_control_function.cpp鏂囦欢鎬诲嚱鏁扮殑澹版槑
 #pragma once
 #include <string>	  
 #include <thread>

@@ -1,77 +1,77 @@
 /**************************************************************
 * @file     control_function.cpp
-* @brief    »úĞµ±Û¿ØÖÆº¯Êı¿â
+* @brief    æœºæ¢°è‡‚æ§åˆ¶å‡½æ•°åº“
 ***************************************************************/
 
-/*Ê¹ÓÃ£ºÔÚGlue/mainº¯ÊıÄÚÒıÓÃÒÔÏÂÏß³Ì£¨£¿£©
+/*ä½¿ç”¨ï¼šåœ¨Glue/mainå‡½æ•°å†…å¼•ç”¨ä»¥ä¸‹çº¿ç¨‹ï¼ˆï¼Ÿï¼‰
 * thread th_socket(Connect);
 * th_socket.detach();
 */
 
-//ps:1.·â×°ArmPosition? 2.¸ü¸Äurp´úÂë 3¡£ÍêÉÆgetposition
+//ps:1.å°è£…ArmPosition? 2.æ›´æ”¹urpä»£ç  3ã€‚å®Œå–„getposition
 
 #include "arm_control_function.h"
 
 #define CONNECT_NUM_MAX 10
 SOCKET clientSocket[1024];
-SOCKET serverSocket;//·şÎñÆ÷
+SOCKET serverSocket;//æœåŠ¡å™¨
 int k = 0;
 
 
 /**
  * @name	Connect
- * @brief	Á¬½Óµ½»úĞµ±Û£¬ÉèÖÃsocketÍ¨Ñ¶
+ * @brief	è¿æ¥åˆ°æœºæ¢°è‡‚ï¼Œè®¾ç½®socketé€šè®¯
  * @param
  * @return
  * @note
  */
 void Connect()
 {
-	//¼ÓÔØsocket¿â °æ±¾ºÅ
+	//åŠ è½½socketåº“ ç‰ˆæœ¬å·
 	WSADATA wsaData;
-	WSAStartup(MAKEWORD(2, 2), &wsaData) != 0;//³É¹¦==0
+	WSAStartup(MAKEWORD(2, 2), &wsaData) != 0;//æˆåŠŸ==0
 	if (LOBYTE(wsaData.wVersion) != 2 || HIBYTE(wsaData.wVersion) != 2)
 	{
-		std::cout << "ÇëÇó°æ±¾Ê§°Ü£¡\n" << std::endl;
+		std::cout << "è¯·æ±‚ç‰ˆæœ¬å¤±è´¥ï¼\n" << std::endl;
 		return -1;
 	}
-	std::cout << "ÇëÇó°æ±¾³É¹¦!\n" << std::endl;
-	//´´½¨socket
+	std::cout << "è¯·æ±‚ç‰ˆæœ¬æˆåŠŸ!\n" << std::endl;
+	//åˆ›å»ºsocket
 	//sockSer = socket(AF_INET, SOCK_STREAM,IPPROTO_TCP);//AF=Address family ,ipv4,TCP,0
 	SOCKET serverSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (serverSocket == INVALID_SOCKET)
 	{
-		std::cout << "´´½¨socketÊ§°Ü£¡\n" << std::endl;
+		std::cout << "åˆ›å»ºsocketå¤±è´¥ï¼\n" << std::endl;
 		return -1;
 	}
-	std::cout << "´´½¨socket³É¹¦£¡\n" << std::endl;
+	std::cout << "åˆ›å»ºsocketæˆåŠŸï¼\n" << std::endl;
 	//addrSer.sin_addr.S_un.S_addr
 	SOCKADDR_IN addr = { 0 };
 
-	//³õÊ¼»¯µØÖ·
-	addr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);/*; htonl(INADDR_ANY);inet_addr("10.186.192.133");*///dec--->2½øÖÆ-->ÍøÂç×Ö½ÚĞò
+	//åˆå§‹åŒ–åœ°å€
+	addr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);/*; htonl(INADDR_ANY);inet_addr("10.186.192.133");*///dec--->2è¿›åˆ¶-->ç½‘ç»œå­—èŠ‚åº
 	//addr.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
 	addr.sin_family = AF_INET;
-	addr.sin_port = htons(5002);//¶Ë¿ÚºÅ~65535
+	addr.sin_port = htons(5002);//ç«¯å£å·~65535
 
-	//°ó¶¨Socket
+	//ç»‘å®šSocket
 	int r = bind(serverSocket, (SOCKADDR*)&addr, sizeof(addr));
 	if (r == -1)
 	{
-		std::cout << "bindÊ§°Ü£¡\n" << std::endl;
+		std::cout << "bindå¤±è´¥ï¼\n" << std::endl;
 		return -1;
 	}
-	std::cout << "bind³É¹¦£¡\n" << std::endl;
+	std::cout << "bindæˆåŠŸï¼\n" << std::endl;
 	//listen
 	r = listen(serverSocket, 10);
 	if (r == -1)
 	{
-		std::cout << "listenÊ§°Ü£¡\n" << std::endl;
+		std::cout << "listenå¤±è´¥ï¼\n" << std::endl;
 		return -1;
 	}
-	std::cout << "listen³É¹¦£¡\n" << std::endl;
-	//Á¬½Ó
-	//µØÖ·×å
+	std::cout << "listenæˆåŠŸï¼\n" << std::endl;
+	//è¿æ¥
+	//åœ°å€æ—
 	SOCKADDR_IN cAddr = { 0 };
 	int len = sizeof cAddr;
 
@@ -84,11 +84,11 @@ void Connect()
 		k++;
 		if (clientSocket[i - 1] == SOCKET_ERROR)
 		{
-			std::cout << "´íÎóµÄ¿Í»§¶Ë£¡\n" << std::endl;
+			std::cout << "é”™è¯¯çš„å®¢æˆ·ç«¯ï¼\n" << std::endl;
 
 			//return -1;
 		}
-		std::cout << "ÓĞ¿Í»§¶Ë½ÓÈë½øÀ´£¡" << inet_ntoa(cAddr.sin_addr) << std::endl;
+		std::cout << "æœ‰å®¢æˆ·ç«¯æ¥å…¥è¿›æ¥ï¼" << inet_ntoa(cAddr.sin_addr) << std::endl;
 		//CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)rcvMSG, (LPVOID)i, NULL, NULL);
 		//CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)sendMSG, (LPVOID)i, NULL, NULL);
 		//thread th_send(Move,x, y, z, rx, ry, rz, v);
@@ -106,13 +106,13 @@ void Connect()
 
 /**
  * @name	GetPosition
- * @brief	½ÓÊÕ»úĞµ±ÛµÄÎ»×Ë£¬²¢´òÓ¡
-	½ÓÊÕµÄx,y,zÒÔmmÎªµ¥Î»£¬rx,ry,rzÒÔradÎªµ¥Î»
- * @param	ÂÔ
+ * @brief	æ¥æ”¶æœºæ¢°è‡‚çš„ä½å§¿ï¼Œå¹¶æ‰“å°
+	æ¥æ”¶çš„x,y,zä»¥mmä¸ºå•ä½ï¼Œrx,ry,rzä»¥radä¸ºå•ä½
+ * @param	ç•¥
  * @return
  * @note
  */
-void GetPosition(LPVOID n)//½ÓÊÜÏûÏ¢
+void GetPosition(LPVOID n)//æ¥å—æ¶ˆæ¯
 {
 	char buff[256];
 	int r;
@@ -125,7 +125,7 @@ void GetPosition(LPVOID n)//½ÓÊÜÏûÏ¢
 
 		if (r > 0)
 		{
-			std::cout << "ÊÕµ½À´×Ô¿Í»§¶Ë" << i << "µÄÏûÏ¢" << std::endl;
+			std::cout << "æ”¶åˆ°æ¥è‡ªå®¢æˆ·ç«¯" << i << "çš„æ¶ˆæ¯" << std::endl;
 		}
 		else {
 			perror("recv");
@@ -140,13 +140,13 @@ void GetPosition(LPVOID n)//½ÓÊÜÏûÏ¢
 
 /**
  * @name	Move
- * @brief	·¢ËÍ»úĞµ±ÛµÄÎ»×Ë
-	ÊäÈëµÄx,y,zÒÔmmÎªµ¥Î»£¬rx,ry,rzÒÔradÎªµ¥Î»£¬ËÙ¶ÈÒÔmm/sÎªµ¥Î»£¬socket·¢ËÍÇ°Òª×öµ¥Î»±ä»»
- * @param	ÂÔ
+ * @brief	å‘é€æœºæ¢°è‡‚çš„ä½å§¿
+	è¾“å…¥çš„x,y,zä»¥mmä¸ºå•ä½ï¼Œrx,ry,rzä»¥radä¸ºå•ä½ï¼Œé€Ÿåº¦ä»¥mm/sä¸ºå•ä½ï¼Œsocketå‘é€å‰è¦åšå•ä½å˜æ¢
+ * @param	ç•¥
  * @return
- * @note ¾­µ÷ÊÔ£¬ËÙ¶ÈÔÚ10mm/s×óÓÒ±È½ÏºÏÀí£¬Ì«¿ì¿ÉÄÜ³öÏÖÎÊÌâ
+ * @note ç»è°ƒè¯•ï¼Œé€Ÿåº¦åœ¨10mm/så·¦å³æ¯”è¾ƒåˆç†ï¼Œå¤ªå¿«å¯èƒ½å‡ºç°é—®é¢˜
  */
-void Move(double x, double y, double z, double rx, double ry, double rz, double v)//·¢ËÍÏûÏ¢
+void Move(double x, double y, double z, double rx, double ry, double rz, double v)//å‘é€æ¶ˆæ¯
 {
 	char buff[80];
 	int j;
