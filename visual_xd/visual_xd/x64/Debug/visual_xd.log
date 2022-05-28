@@ -1,0 +1,5 @@
+﻿D:\VS2019\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: 中间目录(x64\Debug\)包含从另一个项目(visual_xd.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
+  camera.cpp
+C:\Users\86183\Desktop\学习\SRTP\0511opencv修正\visual_xd\visual_xd\camera.cpp(59,6): warning C4101: “pxx”: 未引用的局部变量
+C:\Users\86183\Desktop\学习\SRTP\0511opencv修正\visual_xd\visual_xd\camera.cpp(59,11): warning C4101: “pyy”: 未引用的局部变量
+  visual_xd.vcxproj -> C:\Users\86183\Desktop\学习\SRTP\0511opencv修正\visual_xd\x64\Debug\visual_xd_new.exe
